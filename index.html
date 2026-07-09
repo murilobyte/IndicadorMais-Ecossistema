@@ -6,27 +6,89 @@
     <title>Ecossistema</title>
     <link rel="stylesheet" href="https://use.typekit.net/gku0pni.css">
     <link rel="stylesheet" href="CSS/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<style>
+  :root {
+    --chat--color-primary: #6c00ff;
+
+    --chat--toggle--background: #6c00ff;
+    --chat--toggle--hover--background: #6d28d9;
+    --chat--toggle--active--background: #5b21b6;
+
+    --chat--message--user--background: #7c3aed;
+    --chat--message--user--color: #eaeaea;
+
+    --chat--message--bot--background: #ffffff;
+    --chat--message--bot--color: #171717;
+
+    --chat--window--width: 380px;
+    --chat--window--height: 560px;
+    --chat--border-radius: 10px;
+    --chat--toggle--size: 64px;
+  }
+  .chat-input {
+    border-top: none !important;
+    background: #ea0c0c !important;
+  }
+
+  .chat-input-send-button,
+  .chat-input-send-button:hover,
+  .chat-input-send-button:active {
+    background: #6c00ff !important;
+    color: #ffffff !important;
+  }
+
+  .chat-input-send-button svg,
+  .chat-input-send-button svg path {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    fill: #ffffff !important;
+  }
+</style>
+
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    webhookUrl: 'https://projeto01-n8n.aiv8ty.easypanel.host/webhook/0f348309-c050-4f22-bad9-72b5a9501fdd/chat',
+    mode: 'window',
+    showWelcomeScreen: false,
+    defaultLanguage: 'pt-BR',
+    initialMessages: [
+      'Olá! Sou o assistente do IndicadorMais. Como posso ajudar?'
+    ],
+    i18n: {
+      'pt-BR': {
+        title: 'Atendimento',
+        subtitle: 'IndicadorMais',
+        inputPlaceholder: 'Digite sua mensagem...',
+        getStarted: 'Iniciar conversa',
+        footer: ''
+      }
+    }
+  });
+</script>
 </head>
 <body>
     <!-- ===== SEÇÃO 1 — HERO ===== -->
     <section class="hero" id="hero">
         <div class="hero__conteudo">
-            <!-- Título com efeito máquina de escrever na 1ª tentativa de scroll -->
+            <!-- Título: 2 frases que trocam com crossfade + blur no 1º scroll -->
             <h1 class="hero__titulo">
-                <span class="hero__titulo-texto">Você começou
-com o certificado
-digital.</span>
-                <span class="hero__cursor" aria-hidden="true"></span>
+                <span class="hero__frase hero__frase--1">Você começou<br>com o certificado<br>digital.</span>
+                <span class="hero__frase hero__frase--2" aria-hidden="true">Agora te<br>trouxemos<br>até aqui</span>
             </h1>
 
+            <!-- Descrição: revela linha por linha no load -->
             <p class="hero__descricao">
-                O certificado foi o começo da confiança entre você e seus
-                clientes. Mas todo cliente que precisa de certificado também
-                precisa emitir nota, assinar contratos, controlar ponto e
-                muito mais.
+                <span class="hero__desc-linha" style="--i: 0">O certificado foi o começo da confiança entre você e</span>
+                <span class="hero__desc-linha" style="--i: 1">seus clientes. Mas todo cliente que precisa de certificado</span>
+                <span class="hero__desc-linha" style="--i: 2">também precisa emitir nota, assinar contratos, controlar</span>
+                <span class="hero__desc-linha" style="--i: 3">ponto e muito mais.</span>
             </p>
 
-            <a href="#" class="hero__botao">
+            <a href="#ecossistema" class="hero__botao">
                 <span class="hero__botao-texto">
                     <span>Conheça o Indicador+</span>
                     <span>Conheça o Indicador+</span>
@@ -175,10 +237,6 @@ digital.</span>
     <section class="faq" id="faq">
         <header class="faq__cabecalho">
             <h2 class="faq__titulo reveal">Perguntas<br>frequentes</h2>
-            <p class="faq__subtitulo reveal">
-                Ainda tem dúvida? Fale com a gente pelo
-                WhatsApp <br>um gestor da Syngular responde em até 24h.
-            </p>
         </header>
 
         <div class="faq__card">
@@ -272,6 +330,10 @@ digital.</span>
                 </div>
             </div>
         </div>
+
+        <p class="faq__rodape reveal">
+            Ainda tem dúvida? <a href="#" class="faq__link-chat">Fale com a gente</a>
+        </p>
     </section>
 
     <!-- ===== SEÇÃO 6 — CTA FINAL ===== -->
@@ -286,13 +348,13 @@ digital.</span>
                 completo e você ganha <br>por cada indicação.
             </p>
             <div class="cta__botoes reveal">
-                <a href="#ecossistema" class="cta__botao cta__botao--primario">
+                <a href="#" class="cta__botao cta__botao--primario">
                     <span class="hero__botao-texto">
-                        <span>Conheça o Indicador+</span>
-                        <span>Conheça o Indicador+</span>
+                        <span>Quero lucrar mais</span>
+                        <span>Quero lucrar mais</span>
                     </span>
                 </a>
-                <a href="#funciona" class="cta__botao cta__botao--secundario">Como funciona</a>
+                <a href="https://wa.me/553788512990?text=Ol%C3%A1!%20Ainda%20tenho%20d%C3%BAvidas%20sobre%20o%20Indicador%2B." class="cta__botao cta__botao--secundario" target="_blank" rel="noopener">Ainda tenho dúvidas</a>
             </div>
         </div>
     </section>
@@ -301,10 +363,6 @@ digital.</span>
     <footer class="rodape" id="rodape">
         <div class="rodape__inner">
             <div class="rodape__topo">
-                <!-- PLACEHOLDER: URL do Instagram -->
-                <a class="rodape__insta reveal" href="#" target="_blank" rel="noopener">
-                    INSTAGRAM
-                </a>
 
                 <!-- Logo Syngular -->
                 <div class="rodape__logo reveal" role="img" aria-label="Syngular">
@@ -327,6 +385,52 @@ digital.</span>
             </p>
         </div>
     </footer>
+
+    <!-- ===== MODAL — FORMULÁRIO DE CONTATO ===== -->
+    <div class="modal" id="modal-lead" aria-hidden="true">
+        <div class="modal__overlay" data-fechar-modal></div>
+
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+            <button class="modal__fechar" type="button" aria-label="Fechar" data-fechar-modal>&times;</button>
+
+            <h2 class="modal__titulo" id="modal-titulo">Quero lucrar mais</h2>
+            <p class="modal__subtitulo">
+                Preencha seus dados e fale agora com um gestor da Syngular no WhatsApp.
+            </p>
+
+            <form class="modal__form" id="form-lead" novalidate>
+                <div class="modal__campo">
+                    <label for="lead-nome">Nome</label>
+                    <input type="text" id="lead-nome" name="nome" placeholder="Seu nome completo" required>
+                </div>
+
+                <div class="modal__campo">
+                    <label for="lead-email">E-mail</label>
+                    <input type="email" id="lead-email" name="email" placeholder="voce@email.com" required>
+                </div>
+
+                <div class="modal__campo">
+                    <label for="lead-telefone">Telefone</label>
+                    <input type="tel" id="lead-telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                </div>
+
+                <!-- Consentimento LGPD -->
+                <label class="modal__consentimento">
+                    <input type="checkbox" id="lead-consentimento" required>
+                    <span>
+                        Autorizo o contato e o tratamento dos meus dados conforme a
+                        <!-- PLACEHOLDER: link da política de privacidade -->
+                        <a href="#" target="_blank" rel="noopener">Política de Privacidade</a>.
+                    </span>
+                </label>
+
+                <button type="submit" class="modal__enviar">Quero lucrar mais</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ponto de montagem do widget de chat (n8n) -->
+    <div id="n8n-chat"></div>
 
     <script src="Js/script.js"></script>
 </body>

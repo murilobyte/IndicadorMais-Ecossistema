@@ -11,88 +11,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ===== Hero — máquina de escrever na 1ª tentativa de scroll =====
+    // ===== Hero — troca de frase (crossfade + blur) conforme o scroll =====
+    // Desce → "Agora te trouxemos até aqui"; volta ao topo → "Você começou".
     const titulo = document.querySelector(".hero__titulo");
-    const tituloTexto = document.querySelector(".hero__titulo-texto");
-    const novoTexto = "Agora te trouxemos\naté aqui";
     const semMovimento = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    let jaDisparou = false;
+    if (titulo) {
+        const LIMIAR_DESCE = 60; // px de scroll para trocar p/ frase 2
+        const LIMIAR_SOBE = 30;  // px para voltar p/ frase 1 (histerese)
+        let emFase2 = false;
+        let agendado = false;
 
-    function travarScroll() {
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-    }
-    function liberarScroll() {
-        document.documentElement.style.overflow = "";
-        document.body.style.overflow = "";
-    }
-
-    function digitar() {
-        if (jaDisparou) return;
-        jaDisparou = true;
-
-        // Sem movimento: troca o texto na hora e libera o scroll
-        if (semMovimento) {
-            tituloTexto.textContent = novoTexto;
-            liberarScroll();
-            return;
-        }
-
-        titulo.classList.add("is-typing");
-
-        const velApagar = 32; // ms por letra ao apagar
-        const velDigitar = 60; // ms por letra ao escrever
-
-        // 1) Apaga o texto atual, letra por letra
-        function apagar() {
-            const atual = tituloTexto.textContent;
-            if (atual.length > 0) {
-                tituloTexto.textContent = atual.slice(0, -1);
-                setTimeout(apagar, velApagar);
-            } else {
-                setTimeout(escrever, 260); // pausa antes de reescrever
+        function atualizarFrase() {
+            const y = window.scrollY || window.pageYOffset || 0;
+            if (!emFase2 && y > LIMIAR_DESCE) {
+                emFase2 = true;
+                titulo.classList.add("fase-2");
+            } else if (emFase2 && y < LIMIAR_SOBE) {
+                emFase2 = false;
+                titulo.classList.remove("fase-2"); // reverso ao subir
             }
+            agendado = false;
         }
 
-        // 2) Escreve o novo texto, letra por letra
-        let i = 0;
-        function escrever() {
-            if (i <= novoTexto.length) {
-                tituloTexto.textContent = novoTexto.slice(0, i);
-                i++;
-                setTimeout(escrever, velDigitar);
-            } else {
-                // Assim que a frase termina, LIBERA o scroll
-                liberarScroll();
-                setTimeout(() => titulo.classList.remove("is-typing"), 600);
-            }
-        }
-
-        apagar();
-    }
-
-    // Segura o usuário na Hero até ele tentar rolar
-    if (titulo && tituloTexto && !semMovimento) {
-        travarScroll();
-    }
-
-    // Dispara na primeira intenção de rolar (roda, toque, teclado ou scroll)
-    if (titulo && tituloTexto) {
-        const aoRolar = () => digitar();
-        window.addEventListener("wheel", aoRolar, { once: true, passive: true });
-        window.addEventListener("touchmove", aoRolar, { once: true, passive: true });
-        window.addEventListener("scroll", aoRolar, { once: true, passive: true });
         window.addEventListener(
-            "keydown",
-            (e) => {
-                const teclas = ["ArrowDown", "PageDown", " ", "Spacebar", "End"];
-                if (teclas.includes(e.key)) digitar();
+            "scroll",
+            () => {
+                if (!agendado) {
+                    requestAnimationFrame(atualizarFrase);
+                    agendado = true;
+                }
             },
-            { once: true }
+            { passive: true }
         );
+
+        atualizarFrase(); // estado inicial (caso já carregue rolado)
     }
 
     // ===== Seção 2 — Barra de métricas (entrada + count-up) =====
@@ -204,6 +159,143 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         atualizarParallax();
+    }
+
+    // ===== Modal — formulário de contato (CTA final) =====
+    // PLACEHOLDER: cole a URL do Web App do Google Apps Script (ver
+    // arquivo google-apps-script.gs na raiz do projeto).
+    const SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw92buj8wQXQwkZZ6VD2RgOx4ICWr221XsYbkL7ERA1HS90av9vqrKA5_9DGiDkBgcc/exec";
+    // PLACEHOLDER: número do WhatsApp (somente dígitos, com DDI+DDD).
+    const WHATSAPP_NUMERO = "553788512990";
+
+    const modal = document.getElementById("modal-lead");
+    const botaoCta = document.querySelector(".cta__botao--primario");
+    const formLead = document.getElementById("form-lead");
+
+    if (modal && botaoCta && formLead) {
+        function abrirModal(e) {
+            if (e) e.preventDefault();
+            modal.classList.add("is-aberto");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-ativo");
+            // foco no primeiro campo
+            const primeiro = modal.querySelector("input");
+            if (primeiro) setTimeout(() => primeiro.focus(), 100);
+        }
+
+        function fecharModal() {
+            modal.classList.remove("is-aberto");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("modal-ativo");
+        }
+
+        // Abre ao clicar no botão do CTA final
+        botaoCta.addEventListener("click", abrirModal);
+
+        // Fecha: botão X, overlay e tecla ESC
+        modal.querySelectorAll("[data-fechar-modal]").forEach((el) => {
+            el.addEventListener("click", fecharModal);
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.classList.contains("is-aberto")) {
+                fecharModal();
+            }
+        });
+
+        // Envio do formulário → planilha + WhatsApp
+        formLead.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!formLead.checkValidity()) {
+                formLead.reportValidity();
+                return;
+            }
+
+            const nome = document.getElementById("lead-nome").value.trim();
+            const email = document.getElementById("lead-email").value.trim();
+            const telefone = document.getElementById("lead-telefone").value.trim();
+
+            const botaoEnviar = formLead.querySelector(".modal__enviar");
+            const textoOriginal = botaoEnviar.textContent;
+            botaoEnviar.disabled = true;
+            botaoEnviar.textContent = "Enviando...";
+
+            // Corpo em application/x-www-form-urlencoded — o Apps Script
+            // lê esses campos via e.parameter (colunas A, B e C).
+            const params = new URLSearchParams();
+            params.append("nome", nome);       // coluna A
+            params.append("email", email);     // coluna B
+            params.append("telefone", telefone); // coluna C
+            // o horário (coluna D) é gerado no Apps Script (servidor)
+
+            // 1) sendBeacon: garante a entrega mesmo ao sair da página
+            //    (não é cancelado pela navegação para o WhatsApp).
+            let enviado = false;
+            if (navigator.sendBeacon) {
+                const blob = new Blob([params.toString()], {
+                    type: "application/x-www-form-urlencoded;charset=UTF-8",
+                });
+                enviado = navigator.sendBeacon(SHEETS_WEBAPP_URL, blob);
+            }
+
+            // 2) Fallback: fetch com keepalive (também sobrevive à navegação)
+            if (!enviado) {
+                try {
+                    await fetch(SHEETS_WEBAPP_URL, {
+                        method: "POST",
+                        body: params,
+                        mode: "no-cors",
+                        keepalive: true,
+                    });
+                } catch (err) {
+                    console.error("Erro ao enviar para a planilha:", err);
+                }
+            }
+
+            // Redireciona ao WhatsApp com mensagem pré-preenchida.
+            // Pequeno atraso para o beacon sair antes da navegação.
+            const mensagem = encodeURIComponent(
+                `Olá! Meu nome é ${nome} e quero lucrar mais com o Indicador+.`
+            );
+            setTimeout(() => {
+                window.location.href =
+                    `https://wa.me/${WHATSAPP_NUMERO}?text=${mensagem}`;
+                botaoEnviar.disabled = false;
+                botaoEnviar.textContent = textoOriginal;
+            }, 300);
+        });
+    }
+
+    // ===== Link "Fale com a gente" (abaixo do FAQ) → abre o chatbot =====
+    const linkChatFaq = document.querySelector(".faq__link-chat");
+
+    if (linkChatFaq) {
+        linkChatFaq.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrirChat();
+        });
+    }
+
+    // Aciona o toggle do widget n8n. Se ainda não montou, tenta de novo.
+    function abrirChat(tentativas = 20) {
+        const toggle =
+            document.querySelector(".chat-window-toggle") ||
+            document.querySelector("#n8n-chat .chat-window-toggle");
+        const janelaAberta = document.querySelector(".chat-window");
+
+        if (janelaAberta) return; // já está aberto
+
+        if (toggle) {
+            // dispara um clique real no botão do widget
+            toggle.dispatchEvent(
+                new MouseEvent("click", { bubbles: true, cancelable: true })
+            );
+        } else if (tentativas > 0) {
+            // widget do chat ainda carregando (módulo do CDN)
+            setTimeout(() => abrirChat(tentativas - 1), 300);
+        } else {
+            console.warn("Widget de chat (n8n) não encontrado na página.");
+        }
     }
 });
 

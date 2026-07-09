@@ -26,6 +26,7 @@
 
 html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
 }
 
 body {
@@ -35,6 +36,7 @@ body {
     color: var(--preto-texto);
     background-color: var(--fundo-claro);
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
 }
 
 /* ===== SEÇÃO 1 — HERO ===== */
@@ -45,11 +47,17 @@ body {
     align-items: center;
     justify-content: center;
     background-color: var(--fundo-claro);
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjUyOCIgdmlld0JveD0iMCAwIDE2MDAgNTI4IiBmaWxsPSJub25lIj4KICA8ZyBmaWx0ZXI9InVybCgjZmlsdGVyMF9mbl85MF81KSI+CiAgICA8cGF0aCBkPSJNMjAzLjA4NiAxMTIuNTc1QzE4My44NzQgMTEyLjU3NSAxNTEuODYgMTMxLjYzOCAxMTYuNDk0IDE1OC4xNkMzNS42MzggMjE4Ljc5NyAtNjUgMTc3LjEwMiAtNjUgNzYuMDM1N0MtNjUgNy41MzI2OCAtOS42NTE3IC00OCA1OC44NTEzIC00OEgxMjA5LjEySDEzMTIuMzZDMTQzMy40MyAtNDggMTc1OC41IC0xMTEuMjQ4IDE4ODAuMSAtMTQ4LjY1QzE4ODQuNDQgLTE2NS4yMzEgMTg4OS4yNiAtMTc1LjUgMTg5NS41IC0xNzUuNUMxOTQ2LjMzIC0xNzUuNSAxOTMxLjE0IC0xNjQuMzUzIDE4ODAuMSAtMTQ4LjY1QzE4NjEuMzQgLTc3LjA5NDQgMTg1MS40MSAxMTIuMDExIDE3NzQuNSAxMDAuNTQ1QzE3MjYuMjIgOTMuMzQ3NyAxNjkzLjk3IDE2Mi4wMTQgMTY2OC41NSAyMzIuOTU2QzE2MzMuNzUgMzMwLjA5OSAxNTUzLjczIDM1NS40MjYgMTQ2Mi4zNSAzMDcuNDgyQzEzMTguNDIgMjMxLjk1NiAxMTI4Ljg4IDExOS40OTQgMTE5Ny43NSA4Ni40MjI4QzEyMjEuMjMgNzUuMTQ2NyAxMDEwLjE1IDEzNS44NiA5MzAuNSA4Ni40MjI4Qzg1OC4wMzIgNDEuNDQwOCA4NzMuMzM1IDg0LjMzMDYgNzcxLjUgMTEyLjU3NUM2NjguNzI2IDE0MS4wOCA1NjMuOTM3IDE0OC44NjYgNDYyLjQ4NyAxMTUuOTU2QzQzNS4yNDEgMTA3LjExOCA0MDkuOTY2IDEwMi4xNjkgMzgzLjUgMTAwLjU0NUMzMTUuMjk0IDk2LjM2MDcgMzEwLjEzMSAxMTIuNTc1IDIwMy4wODYgMTEyLjU3NVoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl85MF81KSIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9ImZpbHRlcjBfZm5fOTBfNSIgeD0iLTI2MS42MjUiIHk9Ii0zNzIuMTI1IiB3aWR0aD0iMjM4NS4xIiBoZWlnaHQ9Ijg5OS44MTIiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KICAgICAgPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KICAgICAgPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iOTguMzEyNSIgcmVzdWx0PSJlZmZlY3QxX2ZvcmVncm91bmRCbHVyXzkwXzUiLz4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjEuODg1ODIzMTMwNjA3NjA1IDEuODg1ODIzMTMwNjA3NjA1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiBudW1PY3RhdmVzPSIzIiByZXN1bHQ9Im5vaXNlIiBzZWVkPSI5MTI4Ii8+CiAgICAgIDxmZUNvbG9yTWF0cml4IGluPSJub2lzZSIgdHlwZT0ibHVtaW5hbmNlVG9BbHBoYSIgcmVzdWx0PSJhbHBoYU5vaXNlIi8+CiAgICAgIDxmZUNvbXBvbmVudFRyYW5zZmVyIGluPSJhbHBoYU5vaXNlIiByZXN1bHQ9ImNvbG9yZWROb2lzZTEiPgogICAgICAgIDxmZUZ1bmNBIHR5cGU9ImRpc2NyZXRlIiB0YWJsZVZhbHVlcz0iMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMSAxIDEgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAiLz4KICAgICAgPC9mZUNvbXBvbmVudFRyYW5zZmVyPgogICAgICA8ZmVDb21wb3NpdGUgb3BlcmF0b3I9ImluIiBpbjI9ImVmZmVjdDFfZm9yZWdyb3VuZEJsdXJfOTBfNSIgaW49ImNvbG9yZWROb2lzZTEiIHJlc3VsdD0ibm9pc2UxQ2xpcHBlZCIvPgogICAgICA8ZmVGbG9vZCBmbG9vZC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwLjI1KSIgcmVzdWx0PSJjb2xvcjFGbG9vZCIvPgogICAgICA8ZmVDb21wb3NpdGUgb3BlcmF0b3I9ImluIiBpbjI9Im5vaXNlMUNsaXBwZWQiIGluPSJjb2xvcjFGbG9vZCIgcmVzdWx0PSJjb2xvcjEiLz4KICAgICAgPGZlTWVyZ2UgcmVzdWx0PSJlZmZlY3QyX25vaXNlXzkwXzUiPgogICAgICAgIDxmZU1lcmdlTm9kZSBpbj0iZWZmZWN0MV9mb3JlZ3JvdW5kQmx1cl85MF81Ii8+CiAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJjb2xvcjEiLz4KICAgICAgPC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfOTBfNSIgeDE9IjkxMy4yNTUiIHkxPSItMTc1LjUiIHgyPSI5MTguODcxIiB5Mj0iMzE4LjAwMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjNkQwM0ZDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMC41NzY5MjMiIHN0b3AtY29sb3I9IiM4RDlCRkYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIwLjk4MDc2OSIgc3RvcC1jb2xvcj0iI0UyRTVGRiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+Cjwvc3ZnPgo=");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% auto;
     padding: 2rem 1.5rem;
     overflow: hidden;
 }
 
 .hero__conteudo {
+    position: relative;
+    z-index: 1;
     max-width: 720px;
     width: 100%;
     text-align: center;
@@ -58,42 +66,53 @@ body {
     align-items: center;
 }
 
-/* ----- Título ----- */
+/* ----- Título (2 frases em crossfade + blur) ----- */
 .hero__titulo {
+    position: relative;
     color: var(--violeta);
     font-weight: 700;
     font-size: clamp(2.75rem, 7vw, 5rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin-bottom: 2.5rem;
-    /* min-height evita "pulo" do layout durante o efeito de digitação */
+    /* as duas frases ocupam a mesma célula (empilhadas) */
+    display: grid;
+    /* min-height evita "pulo" do layout ao trocar a frase */
     min-height: 3.2em;
 }
 
-/* pre-line preserva as quebras de linha do texto durante a digitação */
-.hero__titulo-texto {
-    white-space: pre-line;
+.hero__frase {
+    grid-area: 1 / 1;
+    transition: opacity 0.7s var(--easing-suave),
+        filter 0.7s var(--easing-suave),
+        transform 0.7s var(--easing-suave);
+    will-change: opacity, filter, transform;
 }
 
-/* Cursor da máquina de escrever (só aparece durante a digitação) */
-.hero__cursor {
-    display: inline-block;
-    width: 0.045em;
-    height: 0.9em;
-    margin-left: 0.06em;
-    background: var(--violeta);
-    opacity: 0;
-    transform: translateY(0.06em);
-}
-
-.hero__titulo.is-typing .hero__cursor {
+/* Estado inicial: frase 1 nítida no centro; frase 2 desfocada à direita */
+.hero__frase--1 {
     opacity: 1;
-    animation: hero-cursor-blink 0.9s steps(1) infinite;
+    filter: blur(0);
+    transform: translateX(0) scale(1);
 }
 
-@keyframes hero-cursor-blink {
-    0%, 50% { opacity: 1; }
-    50.01%, 100% { opacity: 0; }
+.hero__frase--2 {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateX(70px) scale(0.92);
+}
+
+/* Fase 2: frase 1 sai desfocando à esquerda; frase 2 entra nítida */
+.hero__titulo.fase-2 .hero__frase--1 {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateX(-70px) scale(0.92);
+}
+
+.hero__titulo.fase-2 .hero__frase--2 {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) scale(1);
 }
 
 /* ----- Descrição ----- */
@@ -212,14 +231,12 @@ body {
 
 /* ===== Animação de entrada (load) ===== */
 .hero__titulo,
-.hero__descricao,
 .hero__botao {
     opacity: 0;
     transform: translateY(20px);
 }
 
 .hero.is-visivel .hero__titulo,
-.hero.is-visivel .hero__descricao,
 .hero.is-visivel .hero__botao {
     opacity: 1;
     transform: translateY(0);
@@ -229,8 +246,23 @@ body {
 
 /* Defasagem entre elementos */
 .hero.is-visivel .hero__titulo { transition-delay: 0.05s; }
-.hero.is-visivel .hero__descricao { transition-delay: 0.4s; }
-.hero.is-visivel .hero__botao { transition-delay: 0.55s; }
+.hero.is-visivel .hero__botao { transition-delay: 0.85s; }
+
+/* Descrição — reveal linha por linha (no load) */
+.hero__desc-linha {
+    display: block;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s var(--easing-suave),
+        transform 0.7s var(--easing-suave);
+    transition-delay: calc(var(--i) * 0.13s + 0.4s);
+    will-change: opacity, transform;
+}
+
+.hero.is-visivel .hero__desc-linha {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* ===== Utilitário: reveal ao entrar na viewport ===== */
 .reveal {
@@ -456,11 +488,24 @@ body {
     margin-bottom: 1.25rem;
 }
 
-.faq__subtitulo {
-    color: black;
+.faq__rodape {
+    text-align: center;
+    color: var(--preto-texto);
     font-weight: 500;
     font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
     line-height: 1.4;
+    margin-top: 2.25rem;
+}
+
+.faq__link-chat {
+    color: var(--violeta);
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s var(--easing-suave);
+}
+
+.faq__link-chat:hover {
+    opacity: 0.75;
 }
 
 .faq__card {
@@ -731,10 +776,174 @@ body {
     .cta__botao { width: 100%; }
 }
 
+/* ===== MODAL — FORMULÁRIO DE CONTATO ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--easing-suave),
+        visibility 0.3s var(--easing-suave);
+}
+
+.modal.is-aberto {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 10, 40, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+.modal__dialog {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: var(--branco);
+    border-radius: 24px;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.35s var(--easing-suave);
+}
+
+.modal.is-aberto .modal__dialog {
+    transform: translateY(0) scale(1);
+}
+
+.modal__fechar {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--cinza-texto);
+    cursor: pointer;
+    transition: color 0.2s var(--easing-suave);
+}
+
+.modal__fechar:hover {
+    color: var(--preto-texto);
+}
+
+.modal__titulo {
+    color: var(--preto-texto);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.modal__subtitulo {
+    color: var(--cinza-texto);
+    font-weight: 400;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin-bottom: 1.75rem;
+}
+
+.modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.modal__campo label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--preto-texto);
+}
+
+.modal__campo input {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--preto-texto);
+    padding: 0.8rem 1rem;
+    border: 1px solid #d8d8de;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: border-color 0.2s var(--easing-suave),
+        box-shadow 0.2s var(--easing-suave);
+}
+
+.modal__campo input:focus {
+    outline: none;
+    border-color: var(--violeta);
+    box-shadow: 0 0 0 3px rgba(108, 0, 255, 0.15);
+}
+
+.modal__consentimento {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--cinza-texto);
+    cursor: pointer;
+}
+
+.modal__consentimento input {
+    margin-top: 0.15rem;
+    accent-color: var(--violeta);
+    flex-shrink: 0;
+}
+
+.modal__consentimento a {
+    color: var(--violeta);
+    text-decoration: underline;
+}
+
+.modal__enviar {
+    margin-top: 0.5rem;
+    background: var(--violeta);
+    color: var(--branco);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.95rem 1.5rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.25s var(--easing-suave),
+        opacity 0.25s var(--easing-suave);
+}
+
+.modal__enviar:hover {
+    transform: translateY(-2px);
+}
+
+.modal__enviar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Trava o scroll do body quando o modal está aberto */
+body.modal-ativo {
+    overflow: hidden;
+}
+
 /* Respeita preferência de redução de movimento */
 @media (prefers-reduced-motion: reduce) {
     .hero__titulo,
     .hero__descricao,
+    .hero__desc-linha,
     .hero__botao,
     .reveal,
     .ecossistema__diagrama {
@@ -746,5 +955,13 @@ body {
     .cta__card * {
         transition: none !important;
         animation: none !important;
+    }
+    /* troca de frase instantânea (sem crossfade) */
+    .hero__frase {
+        transition: none !important;
+    }
+    .hero__frase--2 {
+        filter: none !important;
+        transform: none !important;
     }
 }
