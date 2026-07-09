@@ -51,7 +51,8 @@ body {
     background-repeat: no-repeat;
     background-position: top center;
     background-size: 100% auto;
-    padding: 2rem 1.5rem;
+    /* padding-top maior desce o conteúdo um pouco (adapta à altura da tela) */
+    padding: clamp(4rem, 14vh, 11rem) 1.5rem 3rem;
     overflow: hidden;
 }
 
@@ -89,30 +90,44 @@ body {
     will-change: opacity, filter, transform;
 }
 
-/* Estado inicial: frase 1 nítida no centro; frase 2 desfocada à direita */
+/* Ativa: nítida, centralizada, por cima */
 .hero__frase--1 {
     opacity: 1;
     filter: blur(0);
     transform: translateX(0) scale(1);
+    z-index: 2;
 }
 
+/* A ser substituída: fica legível ao LADO (menor, baixa opacidade, sem blur) */
 .hero__frase--2 {
-    opacity: 0;
-    filter: blur(16px);
-    transform: translateX(70px) scale(0.92);
+    opacity: 0.3;
+    filter: none;
+    transform: translateX(33rem) scale(0.6);
+    z-index: 1;
 }
 
-/* Fase 2: frase 1 sai desfocando à esquerda; frase 2 entra nítida */
+/* Fase 2: frase 1 recua bem à esquerda; frase 2 entra nítida no centro */
 .hero__titulo.fase-2 .hero__frase--1 {
-    opacity: 0;
-    filter: blur(16px);
-    transform: translateX(-70px) scale(0.92);
+    opacity: 0.3;
+    filter: none;
+    transform: translateX(-33rem) scale(0.6);
+    z-index: 1;
 }
 
 .hero__titulo.fase-2 .hero__frase--2 {
     opacity: 1;
     filter: blur(0);
     transform: translateX(0) scale(1);
+    z-index: 2;
+}
+
+/* Telas estreitas: não há espaço p/ as duas lado a lado → esconde o fantasma
+   (fica apenas o crossfade/deslize de uma frase para a outra) */
+@media (max-width: 1300px) {
+    .hero__frase--2,
+    .hero__titulo.fase-2 .hero__frase--1 {
+        opacity: 0;
+    }
 }
 
 /* ----- Descrição ----- */
@@ -776,6 +791,15 @@ body {
     .cta__botao { width: 100%; }
 }
 
+/* Notebooks/telas mais baixas: a hero (100vh) deixa pouco espaço embaixo,
+   então o -6rem faria a barra de métricas sobrepor o botão. Neutraliza. */
+@media (max-height: 900px) {
+    .metricas {
+        margin-top: 0;
+        padding-top: 2.5rem;
+    }
+}
+
 /* ===== MODAL — FORMULÁRIO DE CONTATO ===== */
 .modal {
     position: fixed;
@@ -956,12 +980,13 @@ body.modal-ativo {
         transition: none !important;
         animation: none !important;
     }
-    /* troca de frase instantânea (sem crossfade) */
+    /* troca de frase instantânea e limpa (sem fantasma/overlap) */
     .hero__frase {
         transition: none !important;
-    }
-    .hero__frase--2 {
         filter: none !important;
         transform: none !important;
     }
+    .hero__frase--2 { opacity: 0 !important; }
+    .hero__titulo.fase-2 .hero__frase--1 { opacity: 0 !important; }
+    .hero__titulo.fase-2 .hero__frase--2 { opacity: 1 !important; }
 }

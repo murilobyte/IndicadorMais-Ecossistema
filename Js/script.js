@@ -266,6 +266,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ===== Botão "Ainda tenho dúvidas" (CTA final) → abre o chatbot =====
+    const botaoDuvidas = document.querySelector(".cta__botao--secundario");
+
+    if (botaoDuvidas) {
+        botaoDuvidas.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrirChat();
+        });
+    }
+
     // ===== Link "Fale com a gente" (abaixo do FAQ) → abre o chatbot =====
     const linkChatFaq = document.querySelector(".faq__link-chat");
 
@@ -278,24 +288,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Aciona o toggle do widget n8n. Se ainda não montou, tenta de novo.
     function abrirChat(tentativas = 20) {
-        const toggle =
-            document.querySelector(".chat-window-toggle") ||
-            document.querySelector("#n8n-chat .chat-window-toggle");
-        const janelaAberta = document.querySelector(".chat-window");
+        const toggle = document.querySelector(".chat-window-toggle");
 
-        if (janelaAberta) return; // já está aberto
-
-        if (toggle) {
-            // dispara um clique real no botão do widget
-            toggle.dispatchEvent(
-                new MouseEvent("click", { bubbles: true, cancelable: true })
-            );
-        } else if (tentativas > 0) {
-            // widget do chat ainda carregando (módulo do CDN)
-            setTimeout(() => abrirChat(tentativas - 1), 300);
-        } else {
-            console.warn("Widget de chat (n8n) não encontrado na página.");
+        if (!toggle) {
+            // widget do chat ainda carregando (módulo do CDN) — tenta de novo
+            if (tentativas > 0) setTimeout(() => abrirChat(tentativas - 1), 300);
+            else console.warn("Widget de chat (n8n) não encontrado na página.");
+            return;
         }
+
+        // A janela usa v-show: fica sempre no DOM (display:none quando fechada).
+        // Só está "aberta" se estiver realmente visível.
+        const janela = document.querySelector(".chat-window");
+        const aberta = janela && janela.offsetParent !== null;
+
+        if (!aberta) toggle.click();
     }
 });
 
